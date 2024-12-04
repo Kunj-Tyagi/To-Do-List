@@ -2,10 +2,16 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function TodoList() {
-  let [todos, setTodos] = useState([{ task: "Sample-task", id: uuidv4(), isDone: false }]);
+  let [todos, setTodos] = useState([
+    { task: "Sample-task", id: uuidv4(), isDone: false },
+  ]);
   let [newTodo, setnewTodo] = useState("");
 
   let addNewTask = () => {
+    if (newTodo.trim() === "") {
+      alert("Bro task can't be blank!");
+      return;
+    }
     setTodos((prevTodos) => {
       return [...prevTodos, { task: newTodo, id: uuidv4(), isDone: false }];
     });
@@ -62,15 +68,19 @@ export default function TodoList() {
       <h4>Tasks Todo</h4>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id}>
-            <span style={todo.isDone ? { textDecorationLine: "line-through" } : {}}>
-              {todo.task}
-            </span>
-            &nbsp; &nbsp; &nbsp; &nbsp;
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
-            &nbsp; &nbsp; &nbsp; &nbsp;
-            <button onClick={() => markasDone(todo.id)}>Mark-as-Done</button>
-          </li>
+            <li key={todo.id}>
+              <span
+                style={
+                  todo.isDone ? { textDecorationLine: "line-through" } : {}
+                }
+              >
+                {todo.task}
+              </span>
+              &nbsp; &nbsp; &nbsp; &nbsp;
+              <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+              &nbsp; &nbsp; &nbsp; &nbsp;
+              <button onClick={() => markasDone(todo.id)}>Mark-as-Done</button>
+            </li>
         ))}
       </ul>
       <br></br>
